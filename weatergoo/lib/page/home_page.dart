@@ -63,6 +63,45 @@ class _Home_pageState extends State<Home_page> {
                           child: Visibility(
                               visible: (1 > 0) ? true : false,
                               child: SizedBox(
+                                  height: 400,
+                                  child: Container(
+                                    child: Column(children: [
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                              child: Row(children: [
+                                            Icon(Icons.map),
+                                            Text(getconfig.sehir)
+                                          ])),
+                                          Expanded(
+                                              child: Row(
+                                            children: [
+                                              Icon(Icons.calendar_month),
+                                              Text(DateTime.now().toString())
+                                            ],
+                                          )),
+                                        ],
+                                      ),
+                                      Row(children: [
+                                        Expanded(
+                                            child: Row(children: [
+                                          Icon(Icons.temple_buddhist_rounded),
+                                          Text(
+                                              "${Config.weatherSaved.main!.temp.toString()} °C")
+                                        ])),
+                                        Expanded(
+                                            child: Row(children: [
+                                          Icon(Icons.calendar_month),
+                                          Text(Config.weatherSaved.clouds!.all
+                                              .toString())
+                                        ]))
+                                      ]),
+                                    ]),
+                                  )))),
+                      SliverToBoxAdapter(
+                          child: Visibility(
+                              visible: (1 > 0) ? true : false,
+                              child: SizedBox(
                                   height: 200,
                                   child: Container(
                                       child: Row(
@@ -119,10 +158,17 @@ class _Home_pageState extends State<Home_page> {
                                               child: Container(
                                                   child: IconButton(
                                                 icon: Icon(Icons.location_city),
-                                                onPressed: () {},
+                                                onPressed: () {
+                                                  Config.displayDialog(context);
+                                                },
                                               ))))
                                     ],
-                                  )))))
+                                  ))))),
+                      SliverToBoxAdapter(
+                          child: Visibility(
+                              visible: (1 > 0) ? true : false,
+                              child:
+                                  SizedBox(height: 200, child: Container()))),
                     ]);
                   } else {
                     return const Center(

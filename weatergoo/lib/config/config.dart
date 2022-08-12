@@ -13,8 +13,8 @@ import 'package:weatergoo/models/citymodel.dart';
 import 'package:weatergoo/page/ilget.dart';
 
 class getconfig extends GetxController {
-  final active = false.obs;
-  final favori = false.obs;
+  static final active = false.obs;
+  static final favori = false.obs;
   final konumdegisti = false.obs;
   Position _currentPosition = Position(
       latitude: 0,
@@ -103,7 +103,7 @@ class Config extends ChangeNotifier {
     return false;
   }
 
-  var c = Get.put(getconfig());
+  static var c = Get.put(getconfig());
 
   static String konum = "";
 
@@ -122,7 +122,7 @@ class Config extends ChangeNotifier {
     // ...
   }
 
-  displayDialog(BuildContext context) async {
+  static displayDialog(BuildContext context) async {
     _getAddressFromLatLng() async {
       try {
         List<Placemark> placemarks = await placemarkFromCoordinates(

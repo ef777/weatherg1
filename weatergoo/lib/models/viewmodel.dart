@@ -12,19 +12,6 @@ class OpenWeatherView {
   String? celcius;
   String? farenheit;
 
-  String generateText() {
-    final temp = temperature;
-    if (temp! < 0) {
-      return "It's cold :)";
-    } else if (temp == 0) {
-      return "It's the magical ZERO";
-    } else if (temp > 0 && temp < 15) {
-      return "It's creeping up";
-    } else {
-      return "It's hot outside now :))";
-    }
-  }
-
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
