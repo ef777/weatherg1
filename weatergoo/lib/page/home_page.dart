@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:weatergoo/comp/Input.dart';
+import 'package:weatergoo/comp/daystile.dart';
 import 'package:weatergoo/config/config.dart';
 import 'package:weatergoo/models/apimodel.dart';
 
@@ -167,8 +168,18 @@ class _Home_pageState extends State<Home_page> {
                       SliverToBoxAdapter(
                           child: Visibility(
                               visible: (1 > 0) ? true : false,
-                              child:
-                                  SizedBox(height: 200, child: Container()))),
+                              child: SizedBox(
+                                  height: 200,
+                                  child: Container(
+                                      child: ListView.builder(
+                                    itemBuilder: (context, index) {
+                                      var veri =
+                                          Config.weatherSaved.weather![index];
+
+                                      return daystile();
+                                    },
+                                    itemCount: 6,
+                                  ))))),
                     ]);
                   } else {
                     return const Center(
