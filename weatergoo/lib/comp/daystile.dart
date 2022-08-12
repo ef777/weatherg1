@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class daystile extends StatelessWidget {
+  final String? id;
   daystile({
+    this.id,
     Key? key,
   }) : super(key: key);
   String idtoname(id) {
@@ -30,7 +32,7 @@ class daystile extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(8)),
         ),
         child: Row(
-          children: [],
+          children: [Text(id.toString())],
         ));
   }
 }

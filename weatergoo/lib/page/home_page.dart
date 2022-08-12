@@ -184,12 +184,13 @@ class _Home_pageState extends State<Home_page> {
                                   child: Container(
                                       child: ListView.builder(
                                     itemBuilder: (context, index) {
-                                      var veri =
-                                          Config.currentweatherSaved.main!.temp;
+                                      var veri = Config
+                                          .forecastweatherSaved.list[index];
 
-                                      return daystile();
+                                      return daystile(
+                                          id: veri.main.temp.toString());
                                     },
-                                    itemCount: 6,
+                                    itemCount: 1,
                                   ))))),
                     ]);
                   } else {
