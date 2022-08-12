@@ -49,12 +49,17 @@ class Config extends ChangeNotifier {
   static String url = "https://api.openweathermap.org/data/2.5/weather?";
   static final apiKey = "b679fb2adbbc2e862ac532f640945493";
   static var weatherData;
+  static late final OpenWeather weatherSaved;
+
   static Future<OpenWeather> fetchWeatherFromCity(String city) async {
     var response = await http.get(
       Uri.parse(
           "https://api.openweathermap.org/data/2.5/weather?q=$city&units=metric&APPID=$apiKey"),
       headers: {"Accept": "application/json"},
     );
+    print("api isteği");
+
+    print(response.body);
 
     if (response.statusCode == 200) {
       Map<String, dynamic> weatherJson = json.decode(response.body);
@@ -81,15 +86,20 @@ class Config extends ChangeNotifier {
   static List<Citymodel> illiste = [];
   static bool konumsecildi = false;
 
-  Future<bool> checkInternet() async {
+  static Future<bool> checkInternet() async {
     try {
+      print("internet kontrol ediliyor");
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        print('connected internet');
         return true;
       }
     } on SocketException catch (_) {
+      print('not connected internet');
+
       return false;
     }
+    print("internet kontrol edildi başarısız");
     return false;
   }
 
@@ -101,22 +111,13 @@ class Config extends ChangeNotifier {
 
   static String? il = "İl Seçin";
 
-  static checkinternet() async {
-    var internet = await Config().checkInternet();
-    if (internet == false) {
-      // hafızadan al
-    }
-  }
-
-  static Future<void> readJson() async {
-    final String response = await rootBundle.loadString('models/city.json');
+  static Future readJson() async {
+    final String response = await rootBundle.loadString('assets/city.json');
     final data = await citymodelFromJson(response);
     print(data.length);
-    print(data);
-    print(data[0]);
-    print(data[1]);
-    print(data[0].ilAdi);
+
     print(data[1].ilAdi);
+    print("şehirler jsondan çekildi");
 
     // ...
   }

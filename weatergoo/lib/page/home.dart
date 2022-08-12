@@ -6,8 +6,10 @@ import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:fluttericon/typicons_icons.dart';
 import 'package:weatergoo/config/config.dart';
 import 'package:weatergoo/config/prefservice.dart';
+import 'package:weatergoo/models/apimodel.dart';
 import 'package:weatergoo/models/citymodel.dart';
 import 'package:weatergoo/page/home_page.dart';
+import 'package:weatergoo/page/secondpage.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -27,9 +29,14 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     Config.readJson();
-    Config.checkinternet();
+    Config.checkInternet();
+    api();
     //Config.getapi();
     super.initState();
+  }
+
+  Future<void> api() async {
+    Config.weatherSaved = await Config.fetchWeatherFromCity(getconfig.sehir);
   }
 
 // internet check
@@ -38,6 +45,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     List<Widget> sayfalar = [
       const Home_page(),
+      const secondpage(),
 
       //(Config.logindurum == true) ? const Hesap() : const Login(),
     ];
@@ -90,6 +98,13 @@ class _HomeState extends State<Home> {
                     size: 20,
                   ),
                   label: "Home Page",
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(
+                    FontAwesome.circle_empty,
+                    size: 20,
+                  ),
+                  label: "Cities Page",
                 ),
               ],
               currentIndex: Config.selectedIndex,

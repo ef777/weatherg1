@@ -26,10 +26,7 @@ class _IlgetirState extends State<Ilgetir> {
           onTap: () {
             print(datam.ilAdi.toString());
             getconfig.sehir = datam.ilAdi.toString();
-            Navigator.pop(context, {
-              "title": datam.ilAdi.toString(),
-              "plaka": datam.plaka.toString()
-            });
+            Navigator.pop(context);
           },
           leading: CircleAvatar(child: Text(avatar[0])),
           title: Text(datam.ilAdi.toString()),
