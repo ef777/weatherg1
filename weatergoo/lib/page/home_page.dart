@@ -60,20 +60,60 @@ class _Home_pageState extends State<Home_page> {
                               child: SizedBox(
                                   height: 200,
                                   child: Container(
-                                    child: Form(
-                                        key: _formKey,
-                                        child: Padding(
-                                            padding: const EdgeInsets.all(15),
-                                            child: Input(
-                                              label: "City name",
-                                              inputype:
-                                                  TextInputType.emailAddress,
-                                              borderColors: Colors.grey,
-                                              textval: (text) => {email = text},
-                                              errorText:
-                                                  "Please enter a valid city name",
-                                            ))),
-                                  ))))
+                                      child: Row(
+                                    children: [
+                                      Expanded(
+                                          flex: 7,
+                                          child: Form(
+                                              key: _formKey,
+                                              child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.fromLTRB(
+                                                          1, 5, 1, 5),
+                                                  child: SizedBox(
+                                                      height: 80,
+                                                      child: Stack(children: [
+                                                        Input(
+                                                          label: "City name",
+                                                          inputype:
+                                                              TextInputType
+                                                                  .text,
+                                                          borderColors:
+                                                              Colors.grey,
+                                                          textval: (text) => {
+                                                            getconfig.sehir =
+                                                                text
+                                                          },
+                                                          errorText:
+                                                              "Please enter a valid city name",
+                                                        ),
+                                                        Align(
+                                                            alignment: Alignment
+                                                                .centerRight,
+                                                            child: Padding(
+                                                                padding:
+                                                                    EdgeInsets
+                                                                        .all(5),
+                                                                child:
+                                                                    IconButton(
+                                                                  icon: Icon(Icons
+                                                                      .search),
+                                                                  onPressed:
+                                                                      () {},
+                                                                ))),
+                                                      ]))))),
+                                      Expanded(
+                                          flex: 1,
+                                          child: Padding(
+                                              padding: EdgeInsets.fromLTRB(
+                                                  0, 0, 10, 0),
+                                              child: Container(
+                                                  child: IconButton(
+                                                icon: Icon(Icons.location_city),
+                                                onPressed: () {},
+                                              ))))
+                                    ],
+                                  )))))
                     ]);
                   } else {
                     return const Center(
