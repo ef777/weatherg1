@@ -30,7 +30,7 @@ class _Home_pageState extends State<Home_page> {
     print("current: $currentweather");
     print("forecast: $forecastweather");
 
-    await Future<void>.delayed(const Duration(seconds: 3));
+    await Future<void>.delayed(const Duration(seconds: 2));
     Config.currentweatherSaved = currentweather;
     Config.forecastweatherSaved = forecastweather;
   }
