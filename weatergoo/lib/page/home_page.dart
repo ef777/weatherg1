@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:weatergoo/comp/Input.dart';
 import 'package:weatergoo/config/config.dart';
+import 'package:weatergoo/models/apimodel.dart';
 
 // ignore: camel_case_types
 class Home_page extends StatefulWidget {
@@ -16,14 +17,17 @@ class _Home_pageState extends State<Home_page> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final _formKey = GlobalKey<FormState>();
   String email = "";
-  Future<void> api() async {
-    Config.weatherSaved = await Config.fetchWeatherFromCity(getconfig.sehir);
-    Config.weatherFuture = Config.fetchWeatherFromCity(getconfig.sehir);
+  var dat;
+  Future<void> api(city) async {
+    getconfig.sehir = city;
+    dat = await Config.fetchWeatherFromCity(getconfig.sehir);
+    await Future<void>.delayed(const Duration(seconds: 2));
+    Config.weatherSaved = dat;
   }
 
   @override
   void initState() {
-    api();
+    // api();
 
     super.initState();
   }
@@ -38,15 +42,16 @@ class _Home_pageState extends State<Home_page> {
         appBar: AppBar(),
         body: RefreshIndicator(
             onRefresh: () async {
-              api();
+              api(getconfig.sehir).then((value) => null);
             },
             child: FutureBuilder(
-                future: Future.wait([Config.weatherFuture]),
+                future: Future.wait([api(getconfig).then((value) => null)]),
                 builder: (context, AsyncSnapshot<List<dynamic>> snaphost) {
                   print("builder başladı");
 
                   if (snaphost.hasData) {
                     print("data geldi");
+                    print(snaphost.data);
 
                     return CustomScrollView(slivers: [
                       SliverToBoxAdapter(
@@ -74,7 +79,8 @@ class _Home_pageState extends State<Home_page> {
                                                       height: 80,
                                                       child: Stack(children: [
                                                         Input(
-                                                          label: "City name",
+                                                          label:
+                                                              getconfig.sehir,
                                                           inputype:
                                                               TextInputType
                                                                   .text,
@@ -99,7 +105,10 @@ class _Home_pageState extends State<Home_page> {
                                                                   icon: Icon(Icons
                                                                       .search),
                                                                   onPressed:
-                                                                      () {},
+                                                                      () {
+                                                                    api(getconfig
+                                                                        .sehir);
+                                                                  },
                                                                 ))),
                                                       ]))))),
                                       Expanded(
