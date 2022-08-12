@@ -30,13 +30,8 @@ class _HomeState extends State<Home> {
   void initState() {
     Config.readJson();
     Config.checkInternet();
-    api();
-    //Config.getapi();
-    super.initState();
-  }
 
-  Future<void> api() async {
-    Config.weatherSaved = await Config.fetchWeatherFromCity(getconfig.sehir);
+    super.initState();
   }
 
 // internet check
