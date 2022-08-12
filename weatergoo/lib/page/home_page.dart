@@ -18,17 +18,21 @@ class _Home_pageState extends State<Home_page> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final _formKey = GlobalKey<FormState>();
 
-  var dat;
+  var currentweather;
+  var forecastweather;
   Future<void> api(String city) async {
     print("api başladı");
     getconfig.sehir = city.toString();
-    print("api başladı2");
 
-    dat = await Config.fetchWeatherFromCity(city);
-    print("api başladı3");
-    print("dat: $dat");
-    await Future<void>.delayed(const Duration(seconds: 2));
-    Config.weatherSaved = dat;
+    currentweather = await Config.fetchWeatherFromCitynow(city);
+    forecastweather = await Config.fetchWeatherFromCityforecast(city);
+
+    print("current: $currentweather");
+    print("forecast: $forecastweather");
+
+    await Future<void>.delayed(const Duration(seconds: 3));
+    Config.currentweatherSaved = currentweather;
+    Config.forecastweatherSaved = forecastweather;
   }
 
   @override
@@ -94,12 +98,13 @@ class _Home_pageState extends State<Home_page> {
                                             child: Row(children: [
                                           Icon(Icons.temple_buddhist_rounded),
                                           Text(
-                                              "${Config.weatherSaved.main!.temp.toString()} °C")
+                                              "${Config.currentweatherSaved.main!.temp} °C")
                                         ])),
                                         Expanded(
                                             child: Row(children: [
                                           Icon(Icons.calendar_month),
-                                          Text(Config.weatherSaved.clouds!.all
+                                          Text(Config
+                                              .currentweatherSaved.main!.temp
                                               .toString())
                                         ]))
                                       ]),
@@ -180,7 +185,7 @@ class _Home_pageState extends State<Home_page> {
                                       child: ListView.builder(
                                     itemBuilder: (context, index) {
                                       var veri =
-                                          Config.weatherSaved.weather![index];
+                                          Config.currentweatherSaved.main!.temp;
 
                                       return daystile();
                                     },

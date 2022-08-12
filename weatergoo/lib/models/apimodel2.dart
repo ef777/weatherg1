@@ -1,12 +1,12 @@
 // To parse this JSON data, do
 //
-//     final openWeather = openWeatherFromJson(jsonString);
+//     final OpenWeatherForecast = OpenWeatherForecastFromJson(jsonString);
 
 import 'package:meta/meta.dart';
 import 'dart:convert';
 
-class OpenWeather {
-  OpenWeather({
+class OpenWeatherForecast {
+  OpenWeatherForecast({
     required this.cod,
     required this.message,
     required this.cnt,
@@ -20,12 +20,13 @@ class OpenWeather {
   final List<ListElement> list;
   final City city;
 
-  factory OpenWeather.fromRawJson(String str) =>
-      OpenWeather.fromJson(json.decode(str));
+  factory OpenWeatherForecast.fromRawJson(String str) =>
+      OpenWeatherForecast.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory OpenWeather.fromJson(Map<String, dynamic> json) => OpenWeather(
+  factory OpenWeatherForecast.fromJson(Map<String, dynamic> json) =>
+      OpenWeatherForecast(
         cod: json["cod"],
         message: json["message"],
         cnt: json["cnt"],
