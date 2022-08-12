@@ -17,11 +17,16 @@ class Home_page extends StatefulWidget {
 class _Home_pageState extends State<Home_page> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final _formKey = GlobalKey<FormState>();
-  String email = "";
+
   var dat;
-  Future<void> api(city) async {
-    getconfig.sehir = city;
-    dat = await Config.fetchWeatherFromCity(getconfig.sehir);
+  Future<void> api(String city) async {
+    print("api başladı");
+    getconfig.sehir = city.toString();
+    print("api başladı2");
+
+    dat = await Config.fetchWeatherFromCity(city);
+    print("api başladı3");
+    print("dat: $dat");
     await Future<void>.delayed(const Duration(seconds: 2));
     Config.weatherSaved = dat;
   }
@@ -43,10 +48,11 @@ class _Home_pageState extends State<Home_page> {
         appBar: AppBar(),
         body: RefreshIndicator(
             onRefresh: () async {
-              api(getconfig.sehir).then((value) => null);
+              api(getconfig.sehir.toString()).then((value) => null);
             },
             child: FutureBuilder(
-                future: Future.wait([api(getconfig).then((value) => null)]),
+                future:
+                    Future.wait([api(getconfig.sehir).then((value) => value)]),
                 builder: (context, AsyncSnapshot<List<dynamic>> snaphost) {
                   print("builder başladı");
 

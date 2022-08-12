@@ -9,6 +9,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:weatergoo/config/response.dart';
 import 'package:weatergoo/models/apimodel.dart';
+import 'package:weatergoo/models/apimodel2.dart';
 import 'package:weatergoo/models/citymodel.dart';
 import 'package:weatergoo/page/ilget.dart';
 
@@ -48,26 +49,58 @@ class getconfig extends GetxController {
 class Config extends ChangeNotifier {
   static String url = "https://api.openweathermap.org/data/2.5/weather?";
   static final apiKey = "b679fb2adbbc2e862ac532f640945493";
+
   static var weatherData;
   static late final OpenWeather weatherSaved;
+  static Future<OpenWeatherForecast?> fetchWeatherFromCityforecast(
+      String city) async {
+    try {
+      var response = await http.get(
+        Uri.parse(
+            "https://api.openweathermap.org/data/2.5/forecast?q=$city&units=metric&APPID=$apiKey"),
+        headers: {"Accept": "application/json"},
+      );
 
-  static Future<OpenWeather> fetchWeatherFromCity(String city) async {
-    var response = await http.get(
-      Uri.parse(
-          "https://api.openweathermap.org/data/2.5/weather?q=$city&units=metric&APPID=$apiKey"),
-      headers: {"Accept": "application/json"},
-    );
-    print("api isteği");
+      print("forecast isteği");
 
-    print(response.body);
+      print(response.body);
 
-    if (response.statusCode == 200) {
-      Map<String, dynamic> weatherJson = json.decode(response.body);
-      var weather = OpenWeather.fromJson(weatherJson);
-      return weather;
-    } else {
-      throw ValidateResponse.generateException(response);
+      if (response.statusCode == 200) {
+        // Map<String, dynamic> weatherJson2 = json.decode(response.body);
+        var weather2 = OpenWeatherForecast.fromRawJson(response.body);
+        return weather2;
+      } else {
+        throw ValidateResponse.generateException(response);
+      }
+    } catch (e) {
+      print(e);
     }
+    return null;
+  }
+
+  static Future<OpenWeather?> fetchWeatherFromCitynow(String city) async {
+    try {
+      var response = await http.get(
+        Uri.parse(
+            "https://api.openweathermap.org/data/2.5/weather?q=$city&units=metric&APPID=$apiKey"),
+        headers: {"Accept": "application/json"},
+      );
+
+      print("api isteği");
+
+      print(response.body);
+
+      if (response.statusCode == 200) {
+        Map<String, dynamic> weatherJson = json.decode(response.body);
+        var weather = OpenWeather.fromJson(weatherJson);
+        return weather;
+      } else {
+        throw ValidateResponse.generateException(response);
+      }
+    } catch (e) {
+      print(e);
+    }
+    return null;
   }
 
   static getapibylocation(lat, lon) async {
