@@ -66,14 +66,14 @@ class _Home_pageState extends State<Home_page> {
         appBar: AppBar(),
         body: RefreshIndicator(
             onRefresh: () async {
-              forecastvalue = forecast(getconfig.sehir);
-              currentvalue = current(getconfig.sehir);
+              //forecastvalue = forecast(getconfig.sehir);
+              //currentvalue = current(getconfig.sehir);
             },
             child: FutureBuilder(
                 future: Future.wait([forecastvalue, currentvalue]),
                 builder: (context, AsyncSnapshot<List<dynamic>> snaphost) {
-                  var body = snaphost.data![0];
-                  var body2 = snaphost.data![1];
+                  OpenWeatherForecast forecast = snaphost.data![0];
+                  OpenWeather current = snaphost.data![1];
 
                   print("builder başladı");
 
@@ -109,12 +109,12 @@ class _Home_pageState extends State<Home_page> {
                                         Expanded(
                                             child: Row(children: [
                                           Icon(Icons.temple_buddhist_rounded),
-                                          Text("${body2} °C")
+                                          Text("${current} °C")
                                         ])),
                                         Expanded(
                                             child: Row(children: [
                                           Icon(Icons.calendar_month),
-                                          Text(body.toString())
+                                          Text(forecast.toString())
                                         ]))
                                       ]),
                                     ]),
@@ -190,12 +190,12 @@ class _Home_pageState extends State<Home_page> {
                                   child: Container(
                                       child: ListView.builder(
                                     itemBuilder: (context, index) {
-                                      veri = body.list[index];
+                                      veri = forecast.list[index];
 
                                       return daystile(
                                           id: veri.main.temp.toString());
                                     },
-                                    itemCount: body.list.length,
+                                    itemCount: forecast.list.length,
                                   ))))),
                     ]);
                   } else {
