@@ -51,8 +51,6 @@ class Config extends ChangeNotifier {
   static final apiKey = "b679fb2adbbc2e862ac532f640945493";
 
   static var weatherData;
-  static late final OpenWeather currentweatherSaved;
-  static late final OpenWeatherForecast forecastweatherSaved;
 
   static Future<OpenWeatherForecast?> fetchWeatherFromCityforecast(
       String city) async {

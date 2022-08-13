@@ -4,6 +4,7 @@ import 'package:weatergoo/comp/Input.dart';
 import 'package:weatergoo/comp/daystile.dart';
 import 'package:weatergoo/config/config.dart';
 import 'package:weatergoo/models/apimodel.dart';
+import 'package:weatergoo/models/apimodel2.dart';
 
 // ignore: camel_case_types
 class Home_page extends StatefulWidget {
@@ -18,26 +19,38 @@ class _Home_pageState extends State<Home_page> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final _formKey = GlobalKey<FormState>();
 
-  var currentweather;
-  var forecastweather;
-  Future<void> api(String city) async {
+  var a;
+  var b;
+
+  Future<OpenWeather> current(String city) async {
     print("api başladı");
     getconfig.sehir = city.toString();
 
-    currentweather = await Config.fetchWeatherFromCitynow(city);
-    forecastweather = await Config.fetchWeatherFromCityforecast(city);
+    a = await Config.fetchWeatherFromCitynow(city);
 
-    print("current: $currentweather");
-    print("forecast: $forecastweather");
+    print("current: $a");
 
-    await Future<void>.delayed(const Duration(seconds: 2));
-    Config.currentweatherSaved = currentweather;
-    Config.forecastweatherSaved = forecastweather;
+    return a;
   }
+
+  Future<OpenWeatherForecast> forecast(String city) async {
+    print("api2 başladı");
+    getconfig.sehir = city.toString();
+    b = await Config.fetchWeatherFromCityforecast(city);
+
+    print("forecast: $b");
+
+    return b;
+  }
+
+  late Future<OpenWeatherForecast> forecastvalue;
+  late Future<OpenWeather> currentvalue;
 
   @override
   void initState() {
     // api();
+    forecastvalue = forecast(getconfig.sehir);
+    currentvalue = current(getconfig.sehir);
 
     super.initState();
   }
@@ -47,17 +60,21 @@ class _Home_pageState extends State<Home_page> {
     var size = MediaQuery.of(context).size;
     final double itemHeight = (size.height - kToolbarHeight - 80) / 2.2;
     final double itemWidth = size.width / 2;
+    var veri;
     return Scaffold(
         key: _scaffoldKey,
         appBar: AppBar(),
         body: RefreshIndicator(
             onRefresh: () async {
-              api(getconfig.sehir.toString()).then((value) => null);
+              forecastvalue = forecast(getconfig.sehir);
+              currentvalue = current(getconfig.sehir);
             },
             child: FutureBuilder(
-                future:
-                    Future.wait([api(getconfig.sehir).then((value) => value)]),
+                future: Future.wait([forecastvalue, currentvalue]),
                 builder: (context, AsyncSnapshot<List<dynamic>> snaphost) {
+                  var body = snaphost.data![0];
+                  var body2 = snaphost.data![1];
+
                   print("builder başladı");
 
                   if (snaphost.hasData) {
@@ -68,13 +85,8 @@ class _Home_pageState extends State<Home_page> {
                       SliverToBoxAdapter(
                           child: Visibility(
                               visible: (1 > 0) ? true : false,
-                              child:
-                                  SizedBox(height: 200, child: Container()))),
-                      SliverToBoxAdapter(
-                          child: Visibility(
-                              visible: (1 > 0) ? true : false,
                               child: SizedBox(
-                                  height: 400,
+                                  height: 250,
                                   child: Container(
                                     child: Column(children: [
                                       Row(
@@ -97,15 +109,12 @@ class _Home_pageState extends State<Home_page> {
                                         Expanded(
                                             child: Row(children: [
                                           Icon(Icons.temple_buddhist_rounded),
-                                          Text(
-                                              "${Config.currentweatherSaved.main!.temp} °C")
+                                          Text("${body2} °C")
                                         ])),
                                         Expanded(
                                             child: Row(children: [
                                           Icon(Icons.calendar_month),
-                                          Text(Config
-                                              .currentweatherSaved.main!.temp
-                                              .toString())
+                                          Text(body.toString())
                                         ]))
                                       ]),
                                     ]),
@@ -156,10 +165,7 @@ class _Home_pageState extends State<Home_page> {
                                                                   icon: Icon(Icons
                                                                       .search),
                                                                   onPressed:
-                                                                      () {
-                                                                    api(getconfig
-                                                                        .sehir);
-                                                                  },
+                                                                      () {},
                                                                 ))),
                                                       ]))))),
                                       Expanded(
@@ -184,13 +190,12 @@ class _Home_pageState extends State<Home_page> {
                                   child: Container(
                                       child: ListView.builder(
                                     itemBuilder: (context, index) {
-                                      var veri = Config
-                                          .forecastweatherSaved.list[index];
+                                      veri = body.list[index];
 
                                       return daystile(
                                           id: veri.main.temp.toString());
                                     },
-                                    itemCount: 1,
+                                    itemCount: body.list.length,
                                   ))))),
                     ]);
                   } else {
