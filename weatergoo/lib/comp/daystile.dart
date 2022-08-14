@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 
 class daystile extends StatelessWidget {
-  final String? id;
+  final String? id, weather, max, min;
+  final int? day;
   daystile({
     this.id,
+    this.day,
+    this.weather,
+    this.max,
+    this.min,
     Key? key,
   }) : super(key: key);
   String idtoname(id) {
@@ -24,6 +29,8 @@ class daystile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var days = (DateTime.fromMillisecondsSinceEpoch(day! * 1000).weekday - 1)
+        .toString();
     return Container(
         padding: const EdgeInsets.all(5),
         margin: const EdgeInsets.all(5),
@@ -32,7 +39,7 @@ class daystile extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(8)),
         ),
         child: Row(
-          children: [Text(id.toString())],
+          children: [Text(day.toString()), Text(id.toString())],
         ));
   }
 }

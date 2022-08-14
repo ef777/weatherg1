@@ -74,12 +74,17 @@ class _Home_pageState extends State<Home_page> {
                 builder: (context, AsyncSnapshot<List<dynamic>> snaphost) {
                   OpenWeatherForecast forecast = snaphost.data![0];
                   OpenWeather current = snaphost.data![1];
+                  String current_date =
+                      (DateTime.fromMillisecondsSinceEpoch(current.dt! * 1000))
+                          .toString();
+                  String fixedcurrentdate = current_date.substring(0, 10);
 
                   print("builder başladı");
 
                   if (snaphost.hasData) {
                     print("data geldi");
                     print(snaphost.data);
+                    print(" işte liste ${forecast.list}");
 
                     return CustomScrollView(slivers: [
                       SliverToBoxAdapter(
@@ -100,7 +105,7 @@ class _Home_pageState extends State<Home_page> {
                                               child: Row(
                                             children: [
                                               Icon(Icons.calendar_month),
-                                              Text(DateTime.now().toString())
+                                              Text(fixedcurrentdate.toString())
                                             ],
                                           )),
                                         ],
@@ -109,12 +114,14 @@ class _Home_pageState extends State<Home_page> {
                                         Expanded(
                                             child: Row(children: [
                                           Icon(Icons.temple_buddhist_rounded),
-                                          Text("${current} °C")
+                                          Text(
+                                              "${current.main!.temp.toString()} °C")
                                         ])),
                                         Expanded(
                                             child: Row(children: [
                                           Icon(Icons.calendar_month),
-                                          Text(forecast.toString())
+                                          Text(current.weather![0].description
+                                              .toString())
                                         ]))
                                       ]),
                                     ]),
@@ -175,7 +182,7 @@ class _Home_pageState extends State<Home_page> {
                                                   0, 0, 10, 0),
                                               child: Container(
                                                   child: IconButton(
-                                                icon: Icon(Icons.location_city),
+                                                icon: Icon(Icons.gps_fixed),
                                                 onPressed: () {
                                                   Config.displayDialog(context);
                                                 },
@@ -190,10 +197,18 @@ class _Home_pageState extends State<Home_page> {
                                   child: Container(
                                       child: ListView.builder(
                                     itemBuilder: (context, index) {
-                                      veri = forecast.list[index];
-
                                       return daystile(
-                                          id: veri.main.temp.toString());
+                                        day: forecast.list[index].dt,
+                                        id: forecast.list[index].main.temp
+                                            .toString(),
+                                        weather: forecast
+                                            .list[index].weather[index].main
+                                            .toString(),
+                                        max: forecast.list[index].main.tempMax
+                                            .toString(),
+                                        min: forecast.list[index].main.tempMin
+                                            .toString(),
+                                      );
                                     },
                                     itemCount: forecast.list.length,
                                   ))))),
