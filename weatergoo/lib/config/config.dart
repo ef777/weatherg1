@@ -148,7 +148,7 @@ class Config extends ChangeNotifier {
     // ...
   }
 
-  static displayDialog(BuildContext context) async {
+  static getadres() async {
     _getAddressFromLatLng() async {
       try {
         List<Placemark> placemarks = await placemarkFromCoordinates(
@@ -189,123 +189,14 @@ class Config extends ChangeNotifier {
     LocationPermission permission = await Geolocator.requestPermission();
     print("konum");
 
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text("Konum Seçin"),
-          content: SizedBox(
-            height: 250,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: Colors.grey.shade200,
-                      border: Border.all(color: Colors.grey),
-                    ),
-                    child: TextButton(
-                        onPressed: () async {
-                          var sonuc = await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const Ilgetir(),
-                            ),
-                          );
-                          Config.il =
-                              (sonuc != null) ? sonuc["title"] : Config.il;
+    _getCurrentLocation();
 
-                          Navigator.pop(context, true);
-                          displayDialog(context);
-                        },
-                        child: Obx(() => Column(children: [
-                              Text(Config.il!),
-                              Text(c.konumdegisti.value.toString(),
-                                  style: TextStyle(fontSize: 0))
-                            ])))),
-                const SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Expanded(
-                        child: TextButton(
-                      style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all(Colors.purple)),
-                      child: Text(
-                        "Konum",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      //future delayed alert diolog with a timer
-                      onPressed: () {
-                        Config.il = "bekleyiniz";
+    c.konumla();
+    print("konuımdan bulununan şehir ${getconfig.sehir}");
 
-                        _getCurrentLocation();
-                        showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                  content: SizedBox(
-                                height: 100,
-                                child: const Center(
-                                  child: SizedBox(
-                                    child: CircularProgressIndicator(),
-                                    width: 32,
-                                    height: 32,
-                                  ),
-                                ),
-                              ));
-                            });
-                        Future.delayed(Duration(seconds: 3), () {
-                          Navigator.pop(context);
-                        });
+    c.konumla();
 
-                        c.konumla();
-                        getconfig.sehir = getconfig.sehir.toUpperCase();
-                        print("konuımdan bulununan şehir ${getconfig.sehir}");
-
-                        c.konumla();
-                        Config.il = getconfig.sehir;
-
-                        c.konumla();
-
-                        Config.konumsecildi = true;
-                        c.konumla();
-                        c.test();
-                        //   Navigator.pop(context);
-                      },
-                    )),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Expanded(
-                      child: TextButton(
-                        onPressed: () {
-                          Config.konumsecildi = true;
-                          c.test();
-                          Navigator.pop(context);
-                        },
-                        style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all(Colors.blue)),
-                        child: const Text(
-                          "Git",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ),
-                    )
-                  ],
-                )
-              ],
-            ),
-          ),
-        );
-      },
-    );
+    //   Navigator.pop(context);
   }
 }
 /*   

@@ -25,6 +25,8 @@ class _Home_pageState extends State<Home_page> {
   final _formKey = GlobalKey<FormState>();
 
   String aranansehir = "";
+  String konumdangelen = "";
+
   var a;
   var b;
 
@@ -87,20 +89,21 @@ class _Home_pageState extends State<Home_page> {
     var veri;
     return Scaffold(
         key: _scaffoldKey,
-        body: FutureBuilder(
-            future: Future.wait([forecastvalue, currentvalue]),
-            builder: (context, AsyncSnapshot<List<dynamic>> snaphost) {
-              if (snaphost.hasData) {
-                OpenWeatherForecast forecast = snaphost.data?[0];
-                OpenWeather current = snaphost.data?[1];
-                String current_date =
-                    (DateTime.fromMillisecondsSinceEpoch(current.dt! * 1000))
-                        .toString();
-                String fixedcurrentdate = current_date.substring(0, 10);
-                final String assetName = 'assets/weather.svg';
-                return Obx(() => Stack(children: [
-                      Text(c.konumdegisti.value.toString()),
-                      CustomScrollView(slivers: [
+        body: Obx(() => Stack(children: [
+              Text(c.konumdegisti.value.toString()),
+              FutureBuilder(
+                  future: Future.wait([forecastvalue, currentvalue]),
+                  builder: (context, AsyncSnapshot<List<dynamic>> snaphost) {
+                    if (snaphost.hasData) {
+                      OpenWeatherForecast forecast = snaphost.data?[0];
+                      OpenWeather current = snaphost.data?[1];
+                      String current_date =
+                          (DateTime.fromMillisecondsSinceEpoch(
+                                  current.dt! * 1000))
+                              .toString();
+                      String fixedcurrentdate = current_date.substring(0, 10);
+                      final String assetName = 'assets/weather.svg';
+                      return CustomScrollView(slivers: [
                         SliverAppBar(
                           backgroundColor: Colors.white,
                           pinned: true,
@@ -146,10 +149,43 @@ class _Home_pageState extends State<Home_page> {
                                                                     .fromLTRB(
                                                                 0, 5, 1, 5),
                                                         child: SizedBox(
-                                                            height: 80,
+                                                            height: 40,
                                                             child: Stack(
                                                                 children: [
                                                                   TextField(
+                                                                    decoration:
+                                                                        InputDecoration(
+                                                                      filled:
+                                                                          true,
+                                                                      fillColor:
+                                                                          Colors
+                                                                              .white,
+                                                                      hintText:
+                                                                          "City",
+                                                                      // prefixIcon: inputIcon,
+                                                                      contentPadding: const EdgeInsets
+                                                                              .only(
+                                                                          left:
+                                                                              14.0,
+                                                                          bottom:
+                                                                              8.0,
+                                                                          top:
+                                                                              8.0),
+                                                                      focusedBorder:
+                                                                          OutlineInputBorder(
+                                                                        borderSide: BorderSide(
+                                                                            color:
+                                                                                Colors.white,
+                                                                            width: 1.0),
+                                                                      ),
+                                                                      enabledBorder:
+                                                                          OutlineInputBorder(
+                                                                        borderSide: BorderSide(
+                                                                            color:
+                                                                                Colors.white,
+                                                                            width: 1.0),
+                                                                      ),
+                                                                    ),
                                                                     keyboardType:
                                                                         TextInputType
                                                                             .text,
@@ -199,7 +235,7 @@ class _Home_pageState extends State<Home_page> {
                                                                               print("${getconfig.sehir} şehir bu");
 
                                                                               c.konumla();
-                                                                              Future.delayed(Duration(seconds: 3), () {
+                                                                              Future.delayed(Duration(seconds: 1), () {
                                                                                 Navigator.of(context, rootNavigator: true).pop();
                                                                               });
                                                                             },
@@ -224,16 +260,57 @@ class _Home_pageState extends State<Home_page> {
                                                       child:
                                                           Icon(Icons.gps_fixed),
                                                       onPressed: () {
+                                                        print("tuşa basildi");
+
+                                                        Config.getadres();
+                                                        showDialog(
+                                                            context: context,
+                                                            builder:
+                                                                (BuildContext
+                                                                    context) {
+                                                              return AlertDialog(
+                                                                  content:
+                                                                      SizedBox(
+                                                                height: 100,
+                                                                child:
+                                                                    const Center(
+                                                                  child:
+                                                                      SizedBox(
+                                                                    child:
+                                                                        CircularProgressIndicator(),
+                                                                    width: 32,
+                                                                    height: 32,
+                                                                  ),
+                                                                ),
+                                                              ));
+                                                            });
+
+                                                        Future.delayed(
+                                                            Duration(
+                                                                seconds: 5),
+                                                            () {});
                                                         forecastvalue =
                                                             forecasti(getconfig
                                                                 .sehir);
                                                         currentvalue = currenti(
                                                             getconfig.sehir);
+
                                                         print(c
                                                             .konumdegisti.value
                                                             .toString());
-                                                        print(getconfig.sehir);
+                                                        print(
+                                                            "${getconfig.sehir} şehir bu");
+
                                                         c.konumla();
+                                                        Future.delayed(
+                                                            Duration(
+                                                                seconds: 1),
+                                                            () {
+                                                          Navigator.of(context,
+                                                                  rootNavigator:
+                                                                      true)
+                                                              .pop();
+                                                        });
                                                       },
                                                     ))))
                                           ],
@@ -282,8 +359,17 @@ class _Home_pageState extends State<Home_page> {
                                                                   'Acme Logo',
                                                               fit: BoxFit
                                                                   .scaleDown)),
-                                                      Text(current.name!
-                                                          .substring(0, 6))
+                                                      Text(current.name!.substring(
+                                                          0,
+                                                          (current.name!
+                                                                      .length >
+                                                                  10
+                                                              ? (current.name!
+                                                                      .length -
+                                                                  3)
+                                                              : current.name!
+                                                                      .length -
+                                                                  0)))
                                                     ]))),
                                             SizedBox(
                                               width: 10,
@@ -334,9 +420,6 @@ class _Home_pageState extends State<Home_page> {
                                                       color: Colors.white,
                                                       onPressed: () {},
                                                       child: Row(children: [
-                                                        Text(c
-                                                            .konumdegisti.value
-                                                            .toString()),
                                                         SizedBox(
                                                             height: 30,
                                                             width: 30,
@@ -364,8 +447,6 @@ class _Home_pageState extends State<Home_page> {
                                                       color: Colors.white,
                                                       onPressed: () {},
                                                       child: Row(children: [
-                                                        Text(getconfig.sehir
-                                                            .toString()),
                                                         SizedBox(
                                                             height: 30,
                                                             width: 30,
@@ -475,19 +556,19 @@ class _Home_pageState extends State<Home_page> {
                                           },
                                           itemCount: forecast.list.length,
                                         ))))),
-                      ])
-                    ]));
-              } else {
-                return const Center(
-                  child: SizedBox(
-                    width: 32,
-                    height: 32,
-                    child: CircularProgressIndicator(
-                      color: Colors.green,
-                    ),
-                  ),
-                );
-              }
-            }));
+                      ]);
+                    } else {
+                      return const Center(
+                        child: SizedBox(
+                          width: 32,
+                          height: 32,
+                          child: CircularProgressIndicator(
+                            color: Colors.green,
+                          ),
+                        ),
+                      );
+                    }
+                  })
+            ])));
   }
 }
