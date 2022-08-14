@@ -9,7 +9,7 @@ import 'package:weatergoo/config/prefservice.dart';
 import 'package:weatergoo/models/apimodel.dart';
 import 'package:weatergoo/models/citymodel.dart';
 import 'package:weatergoo/page/home_page.dart';
-import 'package:weatergoo/page/secondpage.dart';
+import 'package:weatergoo/page/ilget.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -23,6 +23,7 @@ class _HomeState extends State<Home> {
   late bool logindurum = false;
 
   List pagekey = [
+    GlobalKey<NavigatorState>(),
     GlobalKey<NavigatorState>(),
   ];
 
@@ -40,7 +41,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     List<Widget> sayfalar = [
       const Home_page(),
-      const secondpage(),
+      const Ilgetir(),
 
       //(Config.logindurum == true) ? const Hesap() : const Login(),
     ];

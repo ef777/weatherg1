@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 
 class daystile extends StatelessWidget {
@@ -16,16 +17,16 @@ class daystile extends StatelessWidget {
     switch (weather) {
       case "Description.CLEAR_SKY":
         {
-          String donus = "Bulutsuz";
+          String donus = "assets/sun.svg";
           return donus;
         }
       case "Description.BROKEN_CLOUDS":
         {
-          String donus = "Hafif Bulutlu";
+          String donus = "assets/partly_cloudy_day.svg";
           return donus;
         }
     }
-    return "0";
+    return "assets/windy_weather.svg";
   }
 
   @override
@@ -47,9 +48,18 @@ class daystile extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(8)),
         ),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Column(children: [Text("${gun}"), Text(" ${fixedcurrentdate} ")]),
-            Text(" ${idtoname(weather)} "),
+            Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [Text("${gun}"), Text(" ${fixedcurrentdate} ")]),
+            SizedBox(
+                height: 20,
+                width: 20,
+                child: SvgPicture.asset((idtoname(weather)),
+                    semanticsLabel: 'Acme Logo', fit: BoxFit.scaleDown)),
             Text(" ${max.toString()} °C"),
             Text(" ${min.toString()} °C")
           ],

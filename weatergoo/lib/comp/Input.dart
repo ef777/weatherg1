@@ -25,7 +25,7 @@ class Input extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(left: 15, right: 15, top: 15, bottom: 7),
+      padding: const EdgeInsets.only(left: 1, right: 15, top: 15, bottom: 7),
       child: TextFormField(
         keyboardType: inputype,
         initialValue: inputValue,

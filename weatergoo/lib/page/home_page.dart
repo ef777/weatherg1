@@ -79,24 +79,18 @@ class _Home_pageState extends State<Home_page> {
                           .toString();
                   String fixedcurrentdate = current_date.substring(0, 10);
 
-                  print("builder başladı");
-
                   if (snaphost.hasData) {
-                    print("data geldi");
-                    print(snaphost.data);
-                    print(" işte liste ${forecast.list.length.toString()}");
                     final String assetName = 'assets/weather.svg';
-
                     return CustomScrollView(slivers: [
                       SliverAppBar(
                         backgroundColor: Colors.white,
                         pinned: true,
-                        expandedHeight: 120.0,
+                        expandedHeight: 100.0,
                         flexibleSpace: FlexibleSpaceBar(
                           centerTitle: true,
                           title: Text(
                             'Weathergoo',
-                            style: TextStyle(color: Colors.black, fontSize: 16),
+                            style: TextStyle(color: Colors.black, fontSize: 14),
                           ),
                           background: SvgPicture.asset(assetName,
                               semanticsLabel: 'Acme Logo',
@@ -109,125 +103,311 @@ class _Home_pageState extends State<Home_page> {
                               child: SizedBox(
                                   height: 100,
                                   child: Container(
+                                      margin: new EdgeInsets.symmetric(
+                                          horizontal: 20.0, vertical: 15.0),
+                                      padding:
+                                          EdgeInsets.fromLTRB(20, 0, 20, 0),
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey,
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(8)),
+                                      ),
                                       child: Row(
-                                    children: [
-                                      Expanded(
-                                          flex: 7,
-                                          child: Form(
-                                              key: _formKey,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
+                                        children: [
+                                          Expanded(
+                                              flex: 8,
+                                              child: Form(
+                                                  key: _formKey,
+                                                  child: Padding(
+                                                      padding: const EdgeInsets
+                                                          .fromLTRB(0, 5, 1, 5),
+                                                      child: SizedBox(
+                                                          height: 80,
+                                                          child: Stack(
+                                                              children: [
+                                                                Input(
+                                                                  label:
+                                                                      getconfig
+                                                                          .sehir,
+                                                                  inputype:
+                                                                      TextInputType
+                                                                          .text,
+                                                                  borderColors:
+                                                                      Colors
+                                                                          .grey,
+                                                                  textval:
+                                                                      (text) =>
+                                                                          {
+                                                                    getconfig
+                                                                            .sehir =
+                                                                        text
+                                                                  },
+                                                                  errorText:
+                                                                      "Please enter a valid city name",
+                                                                ),
+                                                                Align(
+                                                                    alignment:
+                                                                        Alignment
+                                                                            .centerRight,
+                                                                    child: Padding(
+                                                                        padding: EdgeInsets.all(5),
+                                                                        child: IconButton(
+                                                                          icon: SizedBox(
+                                                                              height: 30,
+                                                                              width: 30,
+                                                                              child: SvgPicture.asset("assets/search_in_cloud.svg", semanticsLabel: 'Acme Logo', fit: BoxFit.scaleDown)),
+                                                                          onPressed:
+                                                                              () {},
+                                                                        ))),
+                                                              ]))))),
+                                          Expanded(
+                                              flex: 2,
                                               child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.fromLTRB(
-                                                          1, 5, 1, 5),
-                                                  child: SizedBox(
-                                                      height: 80,
-                                                      child: Stack(children: [
-                                                        Input(
-                                                          label:
-                                                              getconfig.sehir,
-                                                          inputype:
-                                                              TextInputType
-                                                                  .text,
-                                                          borderColors:
-                                                              Colors.grey,
-                                                          textval: (text) => {
-                                                            getconfig.sehir =
-                                                                text
-                                                          },
-                                                          errorText:
-                                                              "Please enter a valid city name",
-                                                        ),
-                                                        Align(
-                                                            alignment: Alignment
-                                                                .centerRight,
-                                                            child: Padding(
-                                                                padding:
-                                                                    EdgeInsets
-                                                                        .all(5),
-                                                                child:
-                                                                    IconButton(
-                                                                  icon: Icon(Icons
-                                                                      .search),
-                                                                  onPressed:
-                                                                      () {},
-                                                                ))),
-                                                      ]))))),
-                                      Expanded(
-                                          flex: 1,
-                                          child: Padding(
-                                              padding: EdgeInsets.fromLTRB(
-                                                  0, 0, 10, 0),
-                                              child: Container(
-                                                  child: IconButton(
-                                                icon: Icon(Icons.gps_fixed),
-                                                onPressed: () {
-                                                  Config.displayDialog(context);
-                                                },
-                                              ))))
-                                    ],
-                                  ))))),
+                                                  padding: EdgeInsets.fromLTRB(
+                                                      0, 0, 0, 0),
+                                                  child: Container(
+                                                      child: MaterialButton(
+                                                    minWidth: 15,
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        8)),
+                                                    color: Colors.white,
+                                                    child:
+                                                        Icon(Icons.gps_fixed),
+                                                    onPressed: () {
+                                                      Config.displayDialog(
+                                                          context);
+                                                    },
+                                                  ))))
+                                        ],
+                                      ))))),
                       SliverToBoxAdapter(
                           child: Visibility(
                               visible: (1 > 0) ? true : false,
                               child: Container(
-                                color: Colors.red,
+                                margin:
+                                    new EdgeInsets.symmetric(horizontal: 20.0),
+                                padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
+                                decoration: BoxDecoration(
+                                  color: Colors.grey,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(8)),
+                                ),
                                 height: 100,
-                                child: Column(children: [
-                                  Row(
+                                child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     children: [
-                                      Expanded(
-                                          child: Row(children: [
-                                        Icon(Icons.map),
-                                        Text(getconfig.sehir)
-                                      ])),
-                                      Expanded(
-                                          child: Row(
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
                                         children: [
-                                          Icon(Icons.calendar_month),
-                                          Text(fixedcurrentdate.toString())
+                                          Expanded(
+                                              child: MaterialButton(
+                                                  minWidth: 15,
+                                                  shape: RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8)),
+                                                  color: Colors.white,
+                                                  onPressed: () {},
+                                                  child: Row(children: [
+                                                    SizedBox(
+                                                        height: 30,
+                                                        width: 30,
+                                                        child: SvgPicture.asset(
+                                                            "assets/address.svg",
+                                                            semanticsLabel:
+                                                                'Acme Logo',
+                                                            fit: BoxFit
+                                                                .scaleDown)),
+                                                    Text(getconfig.sehir)
+                                                  ]))),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Expanded(
+                                              child: MaterialButton(
+                                                  minWidth: 15,
+                                                  shape: RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8)),
+                                                  color: Colors.white,
+                                                  onPressed: () {},
+                                                  child: Row(
+                                                    children: [
+                                                      SizedBox(
+                                                          height: 30,
+                                                          width: 30,
+                                                          child: SvgPicture.asset(
+                                                              "assets/Tear-Off Calendar.svg",
+                                                              semanticsLabel:
+                                                                  'Acme Logo',
+                                                              fit: BoxFit
+                                                                  .scaleDown)),
+                                                      Text(fixedcurrentdate
+                                                          .toString())
+                                                    ],
+                                                  ))),
                                         ],
-                                      )),
-                                    ],
-                                  ),
-                                  Row(children: [
-                                    Expanded(
-                                        child: Row(children: [
-                                      Icon(Icons.temple_buddhist_rounded),
-                                      Text(
-                                          "${current.main!.temp.toString()} °C")
-                                    ])),
-                                    Expanded(
-                                        child: Row(children: [
-                                      Icon(Icons.calendar_month),
-                                      Text(current.weather![0].description
-                                          .toString())
-                                    ]))
-                                  ]),
-                                ]),
+                                      ),
+                                      Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceAround,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Expanded(
+                                                child: MaterialButton(
+                                                    minWidth: 15,
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        8)),
+                                                    color: Colors.white,
+                                                    onPressed: () {},
+                                                    child: Row(children: [
+                                                      SizedBox(
+                                                          height: 30,
+                                                          width: 30,
+                                                          child: SvgPicture.asset(
+                                                              "assets/thermometer.svg",
+                                                              semanticsLabel:
+                                                                  'Acme Logo',
+                                                              fit: BoxFit
+                                                                  .scaleDown)),
+                                                      Text(
+                                                          "${current.main!.temp.toString()} °C")
+                                                    ]))),
+                                            SizedBox(
+                                              width: 10,
+                                            ),
+                                            Expanded(
+                                                child: MaterialButton(
+                                                    minWidth: 15,
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        8)),
+                                                    color: Colors.white,
+                                                    onPressed: () {},
+                                                    child: Row(children: [
+                                                      SizedBox(
+                                                          height: 30,
+                                                          width: 30,
+                                                          child: SvgPicture.asset(
+                                                              "assets/about.svg",
+                                                              semanticsLabel:
+                                                                  'Acme Logo',
+                                                              fit: BoxFit
+                                                                  .scaleDown)),
+                                                      Text(current.weather![0]
+                                                          .description
+                                                          .toString())
+                                                    ])))
+                                          ]),
+                                    ]),
                               ))),
+                      SliverToBoxAdapter(
+                          child: Visibility(
+                              visible: (1 > 0) ? true : false,
+                              child: SizedBox(
+                                  height: 70,
+                                  child: Container(
+                                      margin: new EdgeInsets.fromLTRB(
+                                          20.0, 20, 20.0, 5.0),
+                                      padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey,
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(8)),
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          MaterialButton(
+                                              minWidth: 15,
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(8)),
+                                              color: Colors.white,
+                                              onPressed: () {},
+                                              child: Text("Days")),
+                                          MaterialButton(
+                                            minWidth: 15,
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(8)),
+                                            color: Colors.white,
+                                            onPressed: () {},
+                                            child: Text("State"),
+                                          ),
+                                          MaterialButton(
+                                              minWidth: 15,
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(8)),
+                                              color: Colors.white,
+                                              onPressed: () {},
+                                              child: Text("Max")),
+                                          MaterialButton(
+                                              minWidth: 15,
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(8)),
+                                              color: Colors.white,
+                                              onPressed: () {},
+                                              child: Text("Min"))
+                                        ],
+                                      ))))),
                       SliverToBoxAdapter(
                           child: Visibility(
                               visible: (1 > 0) ? true : false,
                               child: SizedBox(
                                   height: 400,
                                   child: Container(
+                                      margin: new EdgeInsets.symmetric(
+                                          horizontal: 20.0, vertical: 0),
+                                      padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey,
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(8)),
+                                      ),
                                       child: ListView.builder(
-                                    itemBuilder: (context, index) {
-                                      return daystile(
-                                        day: forecast.list[index].dt,
-                                        id: forecast.list[index].main.temp
-                                            .toString(),
-                                        weather: forecast
-                                            .list[index].weather[0].description
-                                            .toString(),
-                                        max: forecast.list[index].main.tempMax
-                                            .toString(),
-                                        min: forecast.list[index].main.tempMin
-                                            .toString(),
-                                      );
-                                    },
-                                    itemCount: forecast.list.length,
-                                  ))))),
+                                        itemBuilder: (context, index) {
+                                          return daystile(
+                                            day: forecast.list[index].dt,
+                                            id: forecast.list[index].main.temp
+                                                .toString(),
+                                            weather: forecast.list[index]
+                                                .weather[0].description
+                                                .toString(),
+                                            max: forecast
+                                                .list[index].main.tempMax
+                                                .toString(),
+                                            min: forecast
+                                                .list[index].main.tempMin
+                                                .toString(),
+                                          );
+                                        },
+                                        itemCount: forecast.list.length,
+                                      ))))),
                     ]);
                   } else {
                     return const Center(

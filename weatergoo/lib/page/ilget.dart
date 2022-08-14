@@ -24,8 +24,6 @@ class _IlgetirState extends State<Ilgetir> {
         List<String> avatar = datam.ilAdi!.split("");
         return ListTile(
           onTap: () {
-            print(datam.ilAdi.toString());
-            getconfig.sehir = datam.ilAdi.toString();
             Navigator.pop(context);
           },
           leading: CircleAvatar(child: Text(avatar[0])),

@@ -148,7 +148,7 @@ class Config extends ChangeNotifier {
     final String response = await rootBundle.loadString('assets/city.json');
     final data = await citymodelFromJson(response);
     print(data.length);
-
+    Config.illiste = data;
     print(data[1].ilAdi);
     print("şehirler jsondan çekildi");
 
