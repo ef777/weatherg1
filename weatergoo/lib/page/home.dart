@@ -40,7 +40,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     List<Widget> sayfalar = [
-      Home_page(data: "${getconfig.sehir}"),
+      Home_page(data: "antalya"),
       const Ilgetir(),
 
       //(Config.logindurum == true) ? const Hesap() : const Login(),

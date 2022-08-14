@@ -49,12 +49,19 @@ class _Home_pageState extends State<Home_page> {
   }
 
   Future forecastupdate(String city) {
+    print("fore update çalıştı");
     forecastvalue = forecasti(city);
+    print("fore update alındı");
+
     return forecastvalue;
   }
 
   Future currentupdate(String city) {
+    print("curre update çalıştı");
+
     currentvalue = currenti(city);
+    print("cure update alındı");
+
     return currentvalue;
   }
 
@@ -173,6 +180,7 @@ class _Home_pageState extends State<Home_page> {
                                                                                 child: SvgPicture.asset("assets/search_in_cloud.svg", semanticsLabel: 'Acme Logo', fit: BoxFit.scaleDown)),
                                                                             onPressed:
                                                                                 () async {
+                                                                              print("tuşa basildi");
                                                                               showDialog(
                                                                                   context: context,
                                                                                   builder: (BuildContext context) {
@@ -188,14 +196,15 @@ class _Home_pageState extends State<Home_page> {
                                                                                       ),
                                                                                     ));
                                                                                   });
+                                                                              getconfig.sehir = aranansehir;
+
                                                                               forecastvalue = await forecastupdate(aranansehir);
                                                                               currentvalue = await currentupdate(aranansehir);
-                                                                              getconfig.sehir = aranansehir;
                                                                               print(c.konumdegisti.value.toString());
                                                                               print(getconfig.sehir);
 
                                                                               c.konumla();
-                                                                              Future.delayed(Duration(seconds: 1), () {
+                                                                              Future.delayed(Duration(seconds: 5), () {
                                                                                 Navigator.of(context, rootNavigator: true).pop();
                                                                               });
                                                                             },

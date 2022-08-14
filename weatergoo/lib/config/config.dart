@@ -26,7 +26,7 @@ class getconfig extends GetxController {
       timestamp: DateTime.now(),
       speedAccuracy: 0);
   String _currentAddress = "";
-  static String sehir = "Konya";
+  static String sehir = "istanbul";
 
 //internetkontrol();
 
