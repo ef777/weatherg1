@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:weatergoo/comp/Input.dart';
 import 'package:weatergoo/comp/daystile.dart';
@@ -63,7 +64,6 @@ class _Home_pageState extends State<Home_page> {
     var veri;
     return Scaffold(
         key: _scaffoldKey,
-        appBar: AppBar(),
         body: RefreshIndicator(
             onRefresh: () async {
               //forecastvalue = forecast(getconfig.sehir);
@@ -85,52 +85,29 @@ class _Home_pageState extends State<Home_page> {
                     print("data geldi");
                     print(snaphost.data);
                     print(" işte liste ${forecast.list.length.toString()}");
+                    final String assetName = 'assets/weather.svg';
 
                     return CustomScrollView(slivers: [
+                      SliverAppBar(
+                        backgroundColor: Colors.white,
+                        pinned: true,
+                        expandedHeight: 120.0,
+                        flexibleSpace: FlexibleSpaceBar(
+                          centerTitle: true,
+                          title: Text(
+                            'Weathergoo',
+                            style: TextStyle(color: Colors.black, fontSize: 16),
+                          ),
+                          background: SvgPicture.asset(assetName,
+                              semanticsLabel: 'Acme Logo',
+                              fit: BoxFit.scaleDown),
+                        ),
+                      ),
                       SliverToBoxAdapter(
                           child: Visibility(
                               visible: (1 > 0) ? true : false,
                               child: SizedBox(
-                                  height: 250,
-                                  child: Container(
-                                    child: Column(children: [
-                                      Row(
-                                        children: [
-                                          Expanded(
-                                              child: Row(children: [
-                                            Icon(Icons.map),
-                                            Text(getconfig.sehir)
-                                          ])),
-                                          Expanded(
-                                              child: Row(
-                                            children: [
-                                              Icon(Icons.calendar_month),
-                                              Text(fixedcurrentdate.toString())
-                                            ],
-                                          )),
-                                        ],
-                                      ),
-                                      Row(children: [
-                                        Expanded(
-                                            child: Row(children: [
-                                          Icon(Icons.temple_buddhist_rounded),
-                                          Text(
-                                              "${current.main!.temp.toString()} °C")
-                                        ])),
-                                        Expanded(
-                                            child: Row(children: [
-                                          Icon(Icons.calendar_month),
-                                          Text(current.weather![0].description
-                                              .toString())
-                                        ]))
-                                      ]),
-                                    ]),
-                                  )))),
-                      SliverToBoxAdapter(
-                          child: Visibility(
-                              visible: (1 > 0) ? true : false,
-                              child: SizedBox(
-                                  height: 200,
+                                  height: 100,
                                   child: Container(
                                       child: Row(
                                     children: [
@@ -192,8 +169,47 @@ class _Home_pageState extends State<Home_page> {
                       SliverToBoxAdapter(
                           child: Visibility(
                               visible: (1 > 0) ? true : false,
+                              child: Container(
+                                color: Colors.red,
+                                height: 100,
+                                child: Column(children: [
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                          child: Row(children: [
+                                        Icon(Icons.map),
+                                        Text(getconfig.sehir)
+                                      ])),
+                                      Expanded(
+                                          child: Row(
+                                        children: [
+                                          Icon(Icons.calendar_month),
+                                          Text(fixedcurrentdate.toString())
+                                        ],
+                                      )),
+                                    ],
+                                  ),
+                                  Row(children: [
+                                    Expanded(
+                                        child: Row(children: [
+                                      Icon(Icons.temple_buddhist_rounded),
+                                      Text(
+                                          "${current.main!.temp.toString()} °C")
+                                    ])),
+                                    Expanded(
+                                        child: Row(children: [
+                                      Icon(Icons.calendar_month),
+                                      Text(current.weather![0].description
+                                          .toString())
+                                    ]))
+                                  ]),
+                                ]),
+                              ))),
+                      SliverToBoxAdapter(
+                          child: Visibility(
+                              visible: (1 > 0) ? true : false,
                               child: SizedBox(
-                                  height: 200,
+                                  height: 400,
                                   child: Container(
                                       child: ListView.builder(
                                     itemBuilder: (context, index) {
