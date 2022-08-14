@@ -48,11 +48,14 @@ class _Home_pageState extends State<Home_page> {
     return b;
   }
 
-  bool update(String city) {
-    bool sonuc = false;
+  Future forecastupdate(String city) {
     forecastvalue = forecasti(city);
+    return forecastvalue;
+  }
+
+  Future currentupdate(String city) {
     currentvalue = currenti(city);
-    return sonuc;
+    return currentvalue;
   }
 
   @override
@@ -185,13 +188,14 @@ class _Home_pageState extends State<Home_page> {
                                                                                       ),
                                                                                     ));
                                                                                   });
-                                                                              await update(aranansehir);
+                                                                              forecastvalue = await forecastupdate(aranansehir);
+                                                                              currentvalue = await currentupdate(aranansehir);
                                                                               getconfig.sehir = aranansehir;
                                                                               print(c.konumdegisti.value.toString());
                                                                               print(getconfig.sehir);
 
                                                                               c.konumla();
-                                                                              Future.delayed(Duration(seconds: 5), () {
+                                                                              Future.delayed(Duration(seconds: 1), () {
                                                                                 Navigator.of(context, rootNavigator: true).pop();
                                                                               });
                                                                             },
