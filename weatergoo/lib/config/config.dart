@@ -15,7 +15,6 @@ import 'package:weatergoo/page/ilget.dart';
 
 class getconfig extends GetxController {
   static final active = false.obs;
-  static final favori = false.obs;
   final konumdegisti = false.obs;
   Position _currentPosition = Position(
       latitude: 0,
@@ -32,13 +31,7 @@ class getconfig extends GetxController {
 //internetkontrol();
 
   konumla() {
-    var c = Get.put(getconfig());
     konumdegisti(!konumdegisti.value);
-    Config.il = getconfig.sehir;
-  }
-
-  favorile() {
-    favori(!favori.value);
   }
 
   test() {

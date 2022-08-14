@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:weatergoo/config/config.dart';
+import 'package:weatergoo/page/home_page.dart';
 
 class Ilgetir extends StatefulWidget {
   const Ilgetir({Key? key}) : super(key: key);
@@ -24,7 +25,13 @@ class _IlgetirState extends State<Ilgetir> {
         List<String> avatar = datam.ilAdi!.split("");
         return ListTile(
           onTap: () {
-            Navigator.pop(context);
+            setState(() {
+              Config.selectedIndex = 0;
+            });
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => Home_page(
+                      data: "${datam.ilAdi}",
+                    )));
           },
           leading: CircleAvatar(child: Text(avatar[0])),
           title: Text(datam.ilAdi.toString()),

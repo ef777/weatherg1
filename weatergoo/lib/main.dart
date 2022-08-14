@@ -5,6 +5,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:weatergoo/page/error_page.dart';
 import 'package:weatergoo/page/home.dart';
 import 'package:weatergoo/page/home_page.dart';
+import 'package:weatergoo/page/ilget.dart';
+import 'package:weatergoo/config/config.dart';
 
 class MyHttpOverrides extends HttpOverrides {
   @override
@@ -40,7 +42,8 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => const Home(),
-        '/homepage': (context) => const Home_page(),
+        '/homepage': (context) => Home_page(data: "${getconfig.sehir}"),
+        '/ilgetir': (context) => const Ilgetir(),
       },
       onGenerateRoute: (RouteSettings settings) {
         switch (settings.name) {
@@ -50,7 +53,7 @@ class MyApp extends StatelessWidget {
             );
           case '/homepage':
             return MaterialPageRoute(
-              builder: (context) => const Home_page(),
+              builder: (context) => Home_page(data: "${getconfig.sehir}"),
             );
 
           default:

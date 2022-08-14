@@ -40,7 +40,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     List<Widget> sayfalar = [
-      const Home_page(),
+      Home_page(data: "${getconfig.sehir}"),
       const Ilgetir(),
 
       //(Config.logindurum == true) ? const Hesap() : const Login(),
@@ -104,7 +104,7 @@ class _HomeState extends State<Home> {
                 ),
               ],
               currentIndex: Config.selectedIndex,
-              selectedItemColor: Colors.purple,
+              selectedItemColor: Colors.black,
               unselectedItemColor: Colors.grey,
               onTap: (index) {
                 setState(() {
