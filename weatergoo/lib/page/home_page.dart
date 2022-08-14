@@ -84,7 +84,7 @@ class _Home_pageState extends State<Home_page> {
                   if (snaphost.hasData) {
                     print("data geldi");
                     print(snaphost.data);
-                    print(" işte liste ${forecast.list}");
+                    print(" işte liste ${forecast.list.length.toString()}");
 
                     return CustomScrollView(slivers: [
                       SliverToBoxAdapter(
@@ -202,7 +202,7 @@ class _Home_pageState extends State<Home_page> {
                                         id: forecast.list[index].main.temp
                                             .toString(),
                                         weather: forecast
-                                            .list[index].weather[index].main
+                                            .list[index].weather[0].description
                                             .toString(),
                                         max: forecast.list[index].main.tempMax
                                             .toString(),

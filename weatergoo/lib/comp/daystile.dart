@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class daystile extends StatelessWidget {
   final String? id, weather, max, min;
@@ -11,16 +12,16 @@ class daystile extends StatelessWidget {
     this.min,
     Key? key,
   }) : super(key: key);
-  String idtoname(id) {
-    switch (id) {
-      case "1":
+  String idtoname(weather) {
+    switch (weather) {
+      case "Description.CLEAR_SKY":
         {
-          String donus = "g";
+          String donus = "Bulutsuz";
           return donus;
         }
-      case "2":
+      case "Description.BROKEN_CLOUDS":
         {
-          String donus = "g2";
+          String donus = "Hafif Bulutlu";
           return donus;
         }
     }
@@ -29,8 +30,15 @@ class daystile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var days = (DateTime.fromMillisecondsSinceEpoch(day! * 1000).weekday - 1)
-        .toString();
+    var days = DateTime.fromMillisecondsSinceEpoch(day! * 1000);
+
+    String gun = DateFormat('EEEE').format(days);
+    String datetxt = days.toString();
+    print(weather);
+    String fixedcurrentdate = datetxt.substring(5, datetxt.length - 7);
+
+    /// e.g Thursday
+
     return Container(
         padding: const EdgeInsets.all(5),
         margin: const EdgeInsets.all(5),
@@ -39,7 +47,12 @@ class daystile extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(8)),
         ),
         child: Row(
-          children: [Text(day.toString()), Text(id.toString())],
+          children: [
+            Column(children: [Text("${gun}"), Text(" ${fixedcurrentdate} ")]),
+            Text(" ${idtoname(weather)} "),
+            Text(" ${max.toString()} °C"),
+            Text(" ${min.toString()} °C")
+          ],
         ));
   }
 }
