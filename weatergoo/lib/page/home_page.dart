@@ -10,8 +10,9 @@ import 'package:get/get.dart';
 
 // ignore: camel_case_types
 class Home_page extends StatefulWidget {
-  String data;
-  Home_page({Key? key, required this.data}) : super(key: key);
+  Home_page({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<Home_page> createState() => _Home_pageState();
@@ -72,7 +73,6 @@ class _Home_pageState extends State<Home_page> {
 
   @override
   void initState() {
-    getconfig.sehir = widget.data;
     forecastvalue = forecasti(getconfig.sehir);
     currentvalue = currenti(getconfig.sehir);
 
@@ -149,23 +149,18 @@ class _Home_pageState extends State<Home_page> {
                                                             height: 80,
                                                             child: Stack(
                                                                 children: [
-                                                                  Input(
-                                                                    label: getconfig
-                                                                        .sehir,
-                                                                    inputype:
+                                                                  TextField(
+                                                                    keyboardType:
                                                                         TextInputType
                                                                             .text,
-                                                                    borderColors:
-                                                                        Colors
-                                                                            .grey,
-                                                                    textval:
-                                                                        (text) =>
-                                                                            {
-                                                                      aranansehir =
-                                                                          text
+                                                                    onChanged:
+                                                                        (name) {
+                                                                      setState(
+                                                                          () {
+                                                                        aranansehir =
+                                                                            name;
+                                                                      });
                                                                     },
-                                                                    errorText:
-                                                                        "Please enter a valid city name",
                                                                   ),
                                                                   Align(
                                                                       alignment:
@@ -179,7 +174,7 @@ class _Home_pageState extends State<Home_page> {
                                                                                 width: 30,
                                                                                 child: SvgPicture.asset("assets/search_in_cloud.svg", semanticsLabel: 'Acme Logo', fit: BoxFit.scaleDown)),
                                                                             onPressed:
-                                                                                () async {
+                                                                                () {
                                                                               print("tuşa basildi");
                                                                               showDialog(
                                                                                   context: context,
@@ -197,14 +192,14 @@ class _Home_pageState extends State<Home_page> {
                                                                                     ));
                                                                                   });
                                                                               getconfig.sehir = aranansehir;
+                                                                              forecastvalue = forecasti(getconfig.sehir);
+                                                                              currentvalue = currenti(getconfig.sehir);
 
-                                                                              forecastvalue = await forecastupdate(aranansehir);
-                                                                              currentvalue = await currentupdate(aranansehir);
                                                                               print(c.konumdegisti.value.toString());
-                                                                              print(getconfig.sehir);
+                                                                              print("${getconfig.sehir} şehir bu");
 
                                                                               c.konumla();
-                                                                              Future.delayed(Duration(seconds: 5), () {
+                                                                              Future.delayed(Duration(seconds: 3), () {
                                                                                 Navigator.of(context, rootNavigator: true).pop();
                                                                               });
                                                                             },
@@ -229,8 +224,6 @@ class _Home_pageState extends State<Home_page> {
                                                       child:
                                                           Icon(Icons.gps_fixed),
                                                       onPressed: () {
-                                                        getconfig.sehir =
-                                                            widget.data;
                                                         forecastvalue =
                                                             forecasti(getconfig
                                                                 .sehir);

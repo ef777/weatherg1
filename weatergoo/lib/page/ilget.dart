@@ -28,10 +28,9 @@ class _IlgetirState extends State<Ilgetir> {
             setState(() {
               Config.selectedIndex = 0;
             });
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => Home_page(
-                      data: "${datam.ilAdi}",
-                    )));
+            getconfig.sehir = datam.ilAdi.toString();
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (context) => Home_page()));
           },
           leading: CircleAvatar(child: Text(avatar[0])),
           title: Text(datam.ilAdi.toString()),

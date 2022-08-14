@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => const Home(),
-        '/homepage': (context) => Home_page(data: "${getconfig.sehir}"),
+        '/homepage': (context) => Home_page(),
         '/ilgetir': (context) => const Ilgetir(),
       },
       onGenerateRoute: (RouteSettings settings) {
@@ -53,7 +53,7 @@ class MyApp extends StatelessWidget {
             );
           case '/homepage':
             return MaterialPageRoute(
-              builder: (context) => Home_page(data: "${getconfig.sehir}"),
+              builder: (context) => Home_page(),
             );
 
           default:
